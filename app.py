@@ -79,7 +79,7 @@ st.set_page_config(page_title="Bolão Copa 2026", page_icon="🏆", layout="wide
 if 'bolao' not in st.session_state:
     st.session_state.bolao = BolaoCopa2026()
 
-st.title("🏆 Bolão da Copa do Mundo 2026")
+st.title("🏆 Bolão da Copa - HarmonizaPRO")
 
 # --- CRIANDO AS ABAS ---
 aba_palpites, aba_ranking, aba_admin = st.tabs(["📝 Fazer Palpites", "📊 Ranking e Pontuações", "⚙️ Área do Administrador"])
