@@ -192,29 +192,44 @@ with aba_ranking:
 # ==========================================
 # ABA 3: ÁREA DO ADMINISTRADOR (Você controla os resultados aqui)
 # ==========================================
+# ==========================================
+# ABA 3: ÁREA DO ADMINISTRADOR (Protegida por Senha)
+# ==========================================
 with aba_admin:
     st.header("⚙️ Painel de Resultados Oficiais")
-    st.write("Lance aqui os resultados reais da Copa. O ranking será atualizado automaticamente com base nas regras.")
+    st.write("Área restrita. Digite a senha para lançar os resultados.")
     
-    st.markdown("### 📋 Resultados da Fase de Grupos")
-    gab_1 = st.multiselect("✅ Seleções que passaram em **1º Lugar** (Oficial)", TODAS_SELECOES, default=st.session_state.bolao.gabarito['1_lugar'])
-    gab_2 = st.multiselect("✅ Seleções que passaram em **2º Lugar** (Oficial)", TODAS_SELECOES, default=st.session_state.bolao.gabarito['2_lugar'])
-    gab_3 = st.multiselect("✅ Seleções que passaram em **3º Lugar** (Oficial)", TODAS_SELECOES, default=st.session_state.bolao.gabarito['3_lugar'])
+    # Campo de senha (o type="password" esconde o que está sendo digitado)
+    senha_digitada = st.text_input("🔑 Senha do Administrador:", type="password")
     
-    st.markdown("### ⚔️ Resultados do Mata-Mata")
-    gab_16 = st.multiselect("✅ Seleções que passaram para os **16-Avos**", TODAS_SELECOES, default=st.session_state.bolao.gabarito['avos16'])
-    gab_8 = st.multiselect("✅ Seleções que passaram para as **Oitavas**", TODAS_SELECOES, default=st.session_state.bolao.gabarito['oitavas'])
-    gab_4 = st.multiselect("✅ Seleções que passaram para as **Quartas**", TODAS_SELECOES, default=st.session_state.bolao.gabarito['quartas'])
-    gab_2_semi = st.multiselect("✅ Seleções que passaram para as **Semis**", TODAS_SELECOES, default=st.session_state.bolao.gabarito['semis'])
-    gab_camp = st.multiselect("🏆 **Campeão da Copa**", TODAS_SELECOES, default=st.session_state.bolao.gabarito['campeao'])
+    # Defina a sua senha aqui
+    SENHA_CORRETA = "admin123"
+    
+    if senha_digitada == SENHA_CORRETA:
+        st.success("Acesso liberado!")
+        
+        st.markdown("### 📋 Resultados da Fase de Grupos")
+        gab_1 = st.multiselect("✅ Passaram em **1º Lugar** (Oficial)", TODAS_SELECOES, default=st.session_state.bolao.gabarito['1_lugar'])
+        gab_2 = st.multiselect("✅ Passaram em **2º Lugar** (Oficial)", TODAS_SELECOES, default=st.session_state.bolao.gabarito['2_lugar'])
+        gab_3 = st.multiselect("✅ Passaram em **3º Lugar** (Oficial)", TODAS_SELECOES, default=st.session_state.bolao.gabarito['3_lugar'])
+        
+        st.markdown("### ⚔️ Resultados do Mata-Mata")
+        gab_16 = st.multiselect("✅ Passaram para os **16-Avos**", TODAS_SELECOES, default=st.session_state.bolao.gabarito['avos16'])
+        gab_8 = st.multiselect("✅ Passaram para as **Oitavas**", TODAS_SELECOES, default=st.session_state.bolao.gabarito['oitavas'])
+        gab_4 = st.multiselect("✅ Passaram para as **Quartas**", TODAS_SELECOES, default=st.session_state.bolao.gabarito['quartas'])
+        gab_2_semi = st.multiselect("✅ Passaram para as **Semis**", TODAS_SELECOES, default=st.session_state.bolao.gabarito['semis'])
+        gab_camp = st.multiselect("🏆 **Campeão da Copa**", TODAS_SELECOES, default=st.session_state.bolao.gabarito['campeao'])
 
-    if st.button("🔄 Atualizar Gabarito e Recalcular Ranking"):
-        st.session_state.bolao.atualizar_gabarito('1_lugar', gab_1)
-        st.session_state.bolao.atualizar_gabarito('2_lugar', gab_2)
-        st.session_state.bolao.atualizar_gabarito('3_lugar', gab_3)
-        st.session_state.bolao.atualizar_gabarito('avos16', gab_16)
-        st.session_state.bolao.atualizar_gabarito('oitavas', gab_8)
-        st.session_state.bolao.atualizar_gabarito('quartas', gab_4)
-        st.session_state.bolao.atualizar_gabarito('semis', gab_2_semi)
-        st.session_state.bolao.atualizar_gabarito('campeao', gab_camp)
-        st.success("Gabarito atualizado com sucesso! Olhe a aba de Ranking para ver as mudanças.")
+        if st.button("🔄 Atualizar Gabarito e Recalcular Ranking", type="primary"):
+            st.session_state.bolao.atualizar_gabarito('1_lugar', gab_1)
+            st.session_state.bolao.atualizar_gabarito('2_lugar', gab_2)
+            st.session_state.bolao.atualizar_gabarito('3_lugar', gab_3)
+            st.session_state.bolao.atualizar_gabarito('avos16', gab_16)
+            st.session_state.bolao.atualizar_gabarito('oitavas', gab_8)
+            st.session_state.bolao.atualizar_gabarito('quartas', gab_4)
+            st.session_state.bolao.atualizar_gabarito('semis', gab_2_semi)
+            st.session_state.bolao.atualizar_gabarito('campeao', gab_camp)
+            st.success("Gabarito atualizado com sucesso! Olhe a aba de Ranking para ver as mudanças.")
+    
+    elif senha_digitada != "":
+        st.error("Senha incorreta!")
